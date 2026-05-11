@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>たべとっと。｜食事写真でゆるくカロリー管理</title>
+  <meta name="description" content="食事写真でゆるくカロリー管理。Android版とWEB版の入口を案内する、たべとっと。公式LINE配布用ページです。" />
+
+  <!-- OGP -->
+  <meta property="og:title" content="たべとっと。" />
+  <meta property="og:description" content="食事写真で、ゆるくカロリー管理。Android版・WEB版はこちらから。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./assets/ogp.png" />
+  <meta name="theme-color" content="#8fcdb4" />
+
+  <style>
+    :root {
+      --green: #8fcdb4;
+      --green-dark: #4f9b7b;
+      --pink: #ef9da1;
+      --pink-soft: #ffe9eb;
+      --cream: #fffaf1;
+      --text: #4a4a4a;
+      --muted: #777;
+      --white: #ffffff;
+      --line: #eadfd2;
+      --shadow: 0 12px 30px rgba(85, 72, 58, 0.14);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(239, 157, 161, 0.22), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(143, 205, 180, 0.32), transparent 36%),
+        var(--cream);
+      line-height: 1.8;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 36px;
+      background: linear-gradient(135deg, #ffffff 0%, #fff7f4 45%, #e7f6ee 100%);
+      box-shadow: var(--shadow);
+      padding: 34px 22px 28px;
+      text-align: center;
+      border: 1px solid rgba(234, 223, 210, 0.8);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 2px dashed rgba(169, 147, 118, 0.28);
+      border-radius: 28px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: var(--pink);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      font-size: 1.05rem;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display: inline-grid;
+      place-items: center;
+      color: #fff;
+      background: var(--pink);
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 8px 0 8px;
+      font-size: clamp(2.35rem, 12vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: 0.08em;
+      color: #5b5954;
+    }
+
+    .catch {
+      margin: 0 auto 18px;
+      font-weight: 800;
+      font-size: clamp(1.2rem, 5.8vw, 2.2rem);
+      line-height: 1.5;
+      color: var(--green-dark);
+    }
+
+    .lead {
+      max-width: 680px;
+      margin: 0 auto;
+      color: #5d5a54;
+      font-size: 1rem;
+    }
+
+    .mascot-wrap {
+      margin: 24px auto 14px;
+      width: min(58vw, 220px);
+      aspect-ratio: 1 / 1;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(143, 205, 180, 0.22);
+      border: 1px solid rgba(143, 205, 180, 0.35);
+    }
+
+    .mascot {
+      width: 82%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 10px 12px rgba(80, 70, 60, 0.12));
+    }
+
+    .mascot-message {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: #6a625b;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .card {
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: var(--shadow);
+      padding: 24px 20px;
+      border: 1px solid rgba(234, 223, 210, 0.86);
+    }
+
+    .card.primary {
+      border-top: 8px solid var(--green);
+    }
+
+    .card.secondary {
+      border-top: 8px solid var(--pink);
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .primary .label {
+      color: var(--green-dark);
+      background: rgba(143, 205, 180, 0.18);
+    }
+
+    .secondary .label {
+      color: #c2636a;
+      background: var(--pink-soft);
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      line-height: 1.45;
+      color: #55514c;
+    }
+
+    .card p {
+      margin: 0 0 18px;
+      color: #6b665f;
+      font-size: 0.98rem;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 56px;
+      border-radius: 18px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      box-shadow: 0 8px 16px rgba(90, 80, 70, 0.14);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(90, 80, 70, 0.12);
+    }
+
+    .button.android {
+      color: #fff;
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+    }
+
+    .button.web {
+      color: #fff;
+      background: linear-gradient(135deg, #d66f78, var(--pink));
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px dashed rgba(169, 147, 118, 0.55);
+      color: #716a62;
+      font-size: 0.9rem;
+    }
+
+    .note strong {
+      color: #5c5650;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 24px;
+    }
+
+    .footer a {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    @media (min-width: 760px) {
+      .page {
+        padding-top: 44px;
+      }
+
+      .hero {
+        padding: 48px 48px 38px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .card {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-inner">
+        <div class="brand" aria-label="たべとっと。">
+          <span class="brand-mark">ゆ</span>
+          <span>食事写真でゆる記録</span>
+        </div>
+
+        <h1 id="page-title">たべとっと。</h1>
+        <p class="catch">食事写真で、ゆるくカロリー管理。</p>
+
+        <div class="mascot-wrap">
+          <img class="mascot" src="./assets/mascot.png" alt="たべとっと。マスコット" />
+        </div>
+
+        <p class="lead">
+          写真を撮るだけで、食事の目安カロリーを記録できます。<br />
+          細かく管理しすぎず、まずは「なんとなく食べ方を知る」ためのアプリです。
+        </p>
+
+        <div class="mascot-message">まずは写真を撮るだけでOK</div>
+      </div>
+    </section>
+
+    <section class="cards" aria-label="アプリ利用方法の選択">
+      <article class="card primary">
+        <div class="label">おすすめ</div>
+        <h2>Androidの方はこちら</h2>
+        <p>
+          Google Playからアプリ版をご利用ください。<br />
+          通常はこちらをおすすめしています。
+        </p>
+        <a
+          class="button android"
+          href="https://play.google.com/store/apps/details?id=com.revo.tabetotto&pcampaignid=web_share"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Android版をダウンロード
+        </a>
+      </article>
+
+      <article class="card secondary">
+        <div class="label">補助版</div>
+        <h2>iPhoneの方・アプリを入れずに試したい方</h2>
+        <p>
+          WEB版は、iPhoneの方や、りらっく利用者向けの補助版です。<br />
+          ブラウザからそのまま使えます。
+        </p>
+        <a
+          class="button web"
+          href="https://tabetotto-web.web.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WEB版を使う
+        </a>
+      </article>
+    </section>
+
+    <section class="note" aria-label="WEB版の注意事項">
+      <strong>WEB版について：</strong><br />
+      WEB版は端末やブラウザの状態により、保存・共有などの動作がAndroid版と異なる場合があります。<br />
+      LINE内ブラウザでうまく動かない場合は、右上メニューからSafariまたはChromeで開いてください。
+    </section>
+
+    <footer class="footer">
+      <p>© たべとっと。 / R.evo</p>
+    </footer>
+  </main>
+</body>
+</html>
